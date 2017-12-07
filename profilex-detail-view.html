@@ -1,0 +1,209 @@
+<link rel="import" href="/node_modules/@polymer/polymer/polymer-element.html">
+<link rel="import" href="/node_modules/profilex-common-css/components/reset.html">
+<link rel="import" href="/node_modules/profilex-common-css/components/common.html">
+<link rel="import" href="/node_modules/profilex-common-css/components/flexgrid.html">
+<link rel="import" href="/node_modules/profilex-common-css/components/formcontrols.html">
+
+<link rel="import">
+<dom-module id="profilex-detail-view">
+    <template>
+        <style include="profilex-reset"></style>
+        <style include="profilex-common"></style>
+        <style include="profilex-flexgrid"></style>
+        <style include="profilex-formcontrols"></style>
+        <div class="grid-container fluid">
+  <div class="grid-x grid-margin-x">
+    <div class="cell large-6">
+		<div class="card">
+			<div class="card-divider">
+				<h4>Basic Information</h4>
+			</div>
+			<div class="profile-picture">
+				<img src="images/DSC02022.jpeg"/>
+			</div>
+			<div class="card-section">
+				<div class="grid-x grid-margin-x">
+						<div class="cell large-6 small-12">
+							<label>First Name</label>
+							<input type="text"/>
+						</div>
+						<div class="cell large-6 small-12">
+							<label>Last Name</label>
+							<input type="text"/>							
+						</div>
+				</div>
+				<div class="grid-x grid-margin-x">
+						<div class="cell large-12 small-12">
+							<label>Email</label>
+							<input type="text"/>
+						</div>
+				</div>
+				<div class="grid-x grid-margin-x">
+						<div class="cell large-12 small-12">
+							<label>Country</label>
+							<select>
+								<option>Country 1</option>
+								<option>Country 2</option>
+								<option>Country 3</option>
+							</select>
+						</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="card">
+			<div class="card-divider">
+				<h4>Preferences</h4>
+			</div>
+			<div class="card-section">
+				<div class="grid-x grid-margin-x">
+						<div class="cell large-12 small-12">
+							<label>Timezone Preference</label>
+							<select>
+								<option>Time 1</option>
+								<option>Time 2</option>
+								<option>Time 3</option>
+							</select>
+						</div>
+						<div class="cell large-12 small-12">
+							<label>Language Preference</label>
+							<select>
+								<option>Language 1</option>
+								<option>Language 2</option>
+								<option>Language 3</option>
+							</select>
+						</div>
+						<div class="cell large-12 small-12">
+							<label for="checkbox1"><input type="checkbox" id="checkbox1">Display all timezones</label>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="cell large-6">
+		<div class="card">
+			<div class="card-divider">
+				<h4>Contact</h4>
+			</div>
+			<div class="card-section">
+				<div class="grid-x grid-margin-x">
+						<div class="cell large-6 small-12">
+							<label>Mobile</label>
+							<input type="text"/>
+						</div>
+						<div class="cell large-6 small-12">
+							<label>Office</label>
+							<input type="text"/>							
+						</div>
+				</div>
+				<div class="grid-x grid-margin-x">
+						<div class="cell large-12 small-12">
+							<label>Label</label>
+							<input type="text"/>
+						</div>
+				</div>
+				<div class="grid-x grid-margin-x">
+						<div class="cell large-12 small-12">
+							<label>Label</label>
+							<input type="text"/>
+						</div>
+				</div>
+				<div class="grid-x grid-margin-x">
+						<div class="cell large-12 small-12">
+							<label>Label</label>
+							<input type="text"/>
+						</div>
+				</div>
+				<div class="grid-x grid-margin-x">
+						<div class="cell large-12 small-12">
+							<label>Label</label>
+							<select>
+								<option>Country 1</option>
+								<option>Country 2</option>
+								<option>Country 3</option>
+							</select>
+						</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="card">
+			<div class="card-divider">
+				<h4>Security</h4>
+			</div>
+			<div class="card-section">
+				<div class="grid-x grid-margin-x">
+						<div class="cell large-12 small-12">
+							<label>Old Password</label>
+							<input type="text"/>
+						</div>
+				</div>
+				<div class="grid-x grid-margin-x">
+						<div class="cell large-12 small-12">
+							<label>New Password</label>
+							<input type="text"/>
+						</div>
+				</div>
+				<div class="grid-x grid-margin-x">
+						<div class="cell large-12 small-12">
+							<label>Confirm Password</label>
+							<input type="text"/>
+						</div>
+				</div>
+				<div class="grid-x grid-margin-x">
+						<div class="cell large-12 small-12">
+							<a href="#" class="button">Change Password</a>
+						</div>
+				</div>								
+			</div>
+		</div>
+	</div>
+	
+  </div>
+
+</div>
+    </template>
+    <script>
+        /**
+         * @customElement
+         * @polymer
+         */
+        class ProfilexDetailView extends Polymer.Element {
+
+            static get is() {
+                return 'profilex-detail-view';
+            }
+            static get properties() {
+                return {
+                    oldUrl: String,
+                    currentUrl: String,
+                    route: String
+                };
+            }
+            ready() {
+                super.ready();
+                this.oldUrl = "";
+                this.currentUrl = window.location.href;
+                this.checkURLchange();
+            }
+            checkURLchange() {
+                setInterval(function() {
+                    if ((this.currentUrl != this.oldUrl) || !this.oldUrl) {
+                        this.oldUrl = this.currentUrl;
+                        this.event = new CustomEvent("urlchanged", {
+                            detail: {
+                                url: this.oldUrl
+                            }
+                        });
+                        window.dispatchEvent(this.event);
+                        this.checkURLchange(window.location.href);
+                    }
+                }.bind(this), 2000);
+            }
+        }
+
+        window.customElements.define(ProfilexDetailView.is, ProfilexDetailView);
+    </script>
+</dom-module>
